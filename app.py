@@ -439,14 +439,26 @@ label4 = ttk.Label(screen5, text='label4')
 small_size = tk.StringVar(value="small")
 large_size = tk.StringVar(value="large")
 screen1 = Screen(window)
+
+#screen 1 images
+small_bread = Image.open("images/Bread.png").resize((130,130))
+small_bread = ImageTk.PhotoImage(small_bread)
+
+big_bread = Image.open("images/Bread.png").resize((190,190))
+big_bread = ImageTk.PhotoImage(big_bread)
+
+small_bread_label = ttk.Label(screen1, image=small_bread, background='#858585')
+big_bread_label = ttk.Label(screen1, image=big_bread, background='#858585')
+
 menu1 = ttk.Label(screen1, text="Pick Sandwich Size")
-small = ttk.Button(screen1, text="Select", state='disabled', command=lambda:screen1_func(small_size))
-large = ttk.Button(screen1, text="Select", state='disabled', command=lambda:screen1_func(large_size))
+small = ttk.Button(screen1, text="Small: Rp. 20.000", state='disabled', command=lambda:screen1_func(small_size))
+large = ttk.Button(screen1, text="Large: Rp. 30.000", state='disabled', command=lambda:screen1_func(large_size))
 
 menu1.pack(side='top')
-small.grid(row=6, column=3, rowspan=2, columnspan=4)
+small.grid(row=8, column=3, rowspan=2, columnspan=4)
 large.grid(row=14, column=3, rowspan=2, columnspan=4)
-
+small_bread_label.grid(row = 6, column=4, rowspan=2, columnspan=2)
+big_bread_label.grid(row = 11, column=4, rowspan=2, columnspan=2)
 
 
 # label1.grid(row=1, column=1, sticky='nesw')
