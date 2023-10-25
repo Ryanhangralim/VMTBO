@@ -10,6 +10,34 @@ state_list = list()
 user_output = list()
 state_list.append('R')
 
+table = {
+    "a" : "Roti Kecil,", #input sandwich
+    "b" : "Roti Besar,",
+    "c" : "Tomat,",
+    "d" : "Selada,",
+    "e" : "Paprika,",
+    "f" : "Bawang,",
+    "g" : "Daging Ayam,",
+    "h" : "Daging Sapi,",
+    "i" : "Daging Tuna,",
+    "j" : "Saus BBQ.",
+    "k" : "Saus Mayonnaise.",
+    "l" : "Saus Tomat.",
+    "m" : "Saus Cabai.",
+    "r" : "Kembalian = Rp. 10000",       #output kembalian
+    "s" : "Kembalian = Rp. 20000",
+    "t" : "Kembalian = Rp. 30000",
+    "u" : "Kembalian = Rp. 40000"
+}
+
+
+def convert(list):
+    final = " "
+    for i in list:
+        if i in table:
+            final += table[i] + " "
+    return final
+
 def reset():
     python = sys.executable
     os.execl(python, python, * sys.argv)
@@ -143,8 +171,29 @@ def pesanan():
     #label gambar
     label_gambar = ttk.Label(top, image=sandwich ,text='gambar')
     label_gambar.pack()
-    
 
+    #label detail pesanan
+    detail_pesanan = ttk.Label(top, text=f"Sandwich :{convert(user_input)}")
+    detail_pesanan.pack()
+
+    #kembalian
+    if change['text'] == "Kembalian":
+        pass
+    else:
+        kembalian = ttk.Label(top, text=f"Kembalian : Rp. {change['text']}")
+        kembalian.pack()
+
+    #final state
+    final_state = ttk.Label(top, text=f"Final State : {state_list[-1]}")
+    final_state.pack()
+
+    #print list
+    ttk.Label(top, text=f"User Input : {user_input}").pack()
+    ttk.Label(top, text=f"User Output : {user_output}").pack()
+    ttk.Label(top, text=f"State List : {state_list}").pack()
+
+    #hapus kembalian
+    change['text'] = "Kembalian"
 
 def screen1_func(size):
     global balance
@@ -271,9 +320,23 @@ cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func
 cancel.grid(row=6, column=13, rowspan=2, columnspan=3, sticky='nesw')
 
 #add balance buttons
+#10k image
+gambar_sepuluh = Image.open("images/Uang10000.png").resize((150,64))
+gambar_sepuluh = ImageTk.PhotoImage(gambar_sepuluh)
+
+label_sepuluh = ttk.Label(window, image=gambar_sepuluh)
+label_sepuluh.grid(row = 9, column=14, rowspan=2, columnspan=3)
+
 #add 10k
 input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=lambda:addbalance(sepuluh_ribu))
 input_sepuluh.grid(row=11, column=14, columnspan=2, sticky='nesw')
+
+#20k image
+gambar_duapuluh = Image.open("images/Uang20000.png").resize((150,64))
+gambar_duapuluh = ImageTk.PhotoImage(gambar_duapuluh)
+
+label_duapuluh = ttk.Label(window, image=gambar_duapuluh)
+label_duapuluh.grid(row = 14, column=14, rowspan=2, columnspan=3)
 
 #add 20k
 input_duapuluh = ttk.Button(window, text="Input 20 Ribu", command=lambda:addbalance(duapuluh_ribu))
