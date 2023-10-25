@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Toplevel
+import customtkinter as ctk
 from PIL import Image, ImageTk
 import os
 import sys
@@ -116,6 +117,34 @@ def cancel_func():
     #update label
     balance_label.config(text=f"Balance: {balance.get()}")
 
+#munculkan pesanan
+def pesanan():
+    #update user_input & state
+    user_input.append('q')
+    state_list.append('R')
+    user_output.append('1')
+
+    #Pop up screen
+    tombol_ambil['state'] = 'disabled'
+    top= Toplevel(window)
+    top.geometry(f"400x500+{round((window.winfo_screenwidth() - 400)/2)}+{round((window.winfo_screenheight() - 630)/2)}")
+    top.resizable(False,False)
+    top.title("Pesanan")
+
+    #Label pesanan
+    label = ttk.Label(top, text="Pesanan Anda")
+    label.pack()
+
+    #import gambar
+    sandwich = Image.open("images/sandwich.png").resize((250,250))
+    sandwich = ImageTk.PhotoImage(sandwich)
+    top.image = sandwich
+
+    #label gambar
+    label_gambar = ttk.Label(top, image=sandwich ,text='gambar')
+    label_gambar.pack()
+    
+
 
 def screen1_func(size):
     global balance
@@ -209,6 +238,7 @@ def screen4_func(sauce):
     
     #hide screen
     screen4.hide()
+    output.destroy()
 
 #window setup
 window = tk.Tk()
@@ -253,6 +283,10 @@ input_duapuluh.grid(row=16, column=14, columnspan=2, sticky='nesw')
 change = ttk.Label(window, text="Kembalian", background='dark grey')
 change.grid(row=20, column=13, columnspan=3, rowspan=2, sticky='nesw', )
 change.config(anchor='center')
+
+#tombol ambil pesanan
+tombol_ambil = ttk.Button(window, text="Konfirmasi Pesanan", command=pesanan)
+tombol_ambil.grid(row=20, column=3, columnspan=8, rowspan=2, sticky='nesw')
 
 #output label
 output = ttk.Label(window, text="Output", background="light grey")
@@ -349,6 +383,8 @@ large = ttk.Button(screen1, text="Select", state='disabled', command=lambda:scre
 menu1.pack(side='top')
 small.grid(row=6, column=3, rowspan=2, columnspan=4)
 large.grid(row=14, column=3, rowspan=2, columnspan=4)
+
+
 
 # label1.grid(row=1, column=1, sticky='nesw')
 # label2.grid(row=9, column=17, sticky='nesw')
