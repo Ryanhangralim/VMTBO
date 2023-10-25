@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk, Toplevel
+from tkinter import Toplevel
+import ttkbootstrap as ttk
 import customtkinter as ctk
 from PIL import Image, ImageTk
 import os
@@ -10,7 +11,7 @@ state_list = list()
 user_output = list()
 state_list.append('R')
 
-background_color = "#858585"
+background_color = "#ecf0f1"
 
 table = {
     "a" : "Roti Kecil,", #input sandwich
@@ -46,7 +47,7 @@ def reset():
 
 class Screen(ttk.Frame):
     def __init__(self, parent):
-        super().__init__(master=parent, borderwidth=20, )
+        super().__init__(master=parent, borderwidth=20, bootstyle = 'light')
         self.grid(row=1, column=1, rowspan=18, columnspan=12, sticky='nesw', padx=10)
         self.hidden = 0
 
@@ -105,7 +106,7 @@ def addbalance(amount):
     cancel['state'] = 'enabled'
 
     #update label
-    balance_label.config(text=f"Balance: {balance.get()}")
+    balance_label.config(text=f"Balance: \nRp. {balance.get()}")
 
 
 #cancel function
@@ -145,7 +146,7 @@ def cancel_func():
 
 
     #update label
-    balance_label.config(text=f"Balance: {balance.get()}")
+    balance_label.config(text=f"Balance:\n Rp. {balance.get()}")
 
 #munculkan pesanan
 def pesanan():
@@ -157,13 +158,14 @@ def pesanan():
     #Pop up screen
     tombol_ambil['state'] = 'disabled'
     top= Toplevel(window)
-    top.geometry(f"400x500+{round((window.winfo_screenwidth() - 400)/2)}+{round((window.winfo_screenheight() - 630)/2)}")
+    top.geometry(f"500x550+{round((window.winfo_screenwidth() - 400)/2)}+{round((window.winfo_screenheight() - 630)/2)}")
     top.resizable(False,False)
     top.title("Pesanan")
+    top.iconbitmap("images/vmicon.ico")
 
     #Label pesanan
-    label = ttk.Label(top, text="Pesanan Anda")
-    label.pack()
+    label = ttk.Label(top, text="Pesanan Anda", font=("Helvetica", 12, "bold"))
+    label.pack(pady=5)
 
     #import gambar
     sandwich = Image.open("images/sandwich.png").resize((250,250))
@@ -200,6 +202,7 @@ def pesanan():
     #reset vending machine button
     reset_button2 = ttk.Button(top, text="Reset Vending Machine", command=reset)
     reset_button2.pack(side='bottom', pady=25)
+
 
 def screen1_func(size):
     global balance
@@ -296,7 +299,7 @@ def screen4_func(sauce):
     output.destroy()
 
 #window setup
-window = tk.Tk()
+window = ttk.Window(themename= 'flatly')
 window.geometry(f'500x675+{round((window.winfo_screenwidth() - 500)/2)}+{round((window.winfo_screenheight() - 730)/2)}')
 window.title('Vending Machine D3')
 window.resizable(False, False)
@@ -312,18 +315,18 @@ window.rowconfigure(tuple(range(23)), weight= 1, uniform='fred')
 window.grid_propagate(False)
 
 #reset button
-reset_button = ttk.Button(window, text="Reset", command=reset)
-reset_button.grid(row = 2, column=13, rowspan=2, columnspan=2, sticky='nesw')
+reset_button = ttk.Button(window, text="Reset", command=reset, bootstyle ="danger")
+reset_button.grid(row = 2, column=14, rowspan=2, columnspan=2, sticky='nesw')
 
 #balance label
 balance = tk.IntVar(value = 0)
-balance_label = ttk.Label(window, text=f'Balance = {balance.get()}')
-balance_label.grid(row=4, column=13, rowspan=2, columnspan=3, sticky='nesw')
+balance_label = ttk.Label(window, text=f'Balance: \nRp. {balance.get()}', font=("Helvetica", 11, "bold"))
+balance_label.grid(row=4, column=14, rowspan=2, columnspan=3, sticky='nesw')
 balance_label.config(anchor='center')
 
 #cancel button
-cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func)
-cancel.grid(row=6, column=13, rowspan=2, columnspan=3, sticky='nesw')
+cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func, bootstyle='warning')
+cancel.grid(row=6, column=14, rowspan=2, columnspan=2, sticky='nesw')
 
 #add balance buttons
 #10k image
@@ -331,22 +334,22 @@ gambar_sepuluh = Image.open("images/Uang10000.png").resize((150,64))
 gambar_sepuluh = ImageTk.PhotoImage(gambar_sepuluh)
 
 label_sepuluh = ttk.Label(window, image=gambar_sepuluh)
-label_sepuluh.grid(row = 9, column=14, rowspan=2, columnspan=3)
+label_sepuluh.grid(row = 9, column=14, rowspan=2, columnspan=2)
 
 #add 10k
-input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=lambda:addbalance(sepuluh_ribu))
-input_sepuluh.grid(row=11, column=14, columnspan=2, sticky='nesw')
+input_sepuluh = ttk.Button(window, text="Input Rp. 10.000", command=lambda:addbalance(sepuluh_ribu))
+input_sepuluh.grid(row=11, column=14, columnspan=2, rowspan=2, sticky='nesw', pady=5)
 
 #20k image
 gambar_duapuluh = Image.open("images/Uang20000.png").resize((150,64))
 gambar_duapuluh = ImageTk.PhotoImage(gambar_duapuluh)
 
 label_duapuluh = ttk.Label(window, image=gambar_duapuluh)
-label_duapuluh.grid(row = 14, column=14, rowspan=2, columnspan=3)
+label_duapuluh.grid(row = 14, column=14, rowspan=2, columnspan=2)
 
 #add 20k
-input_duapuluh = ttk.Button(window, text="Input 20 Ribu", command=lambda:addbalance(duapuluh_ribu))
-input_duapuluh.grid(row=16, column=14, columnspan=2, sticky='nesw')
+input_duapuluh = ttk.Button(window, text="Input Rp. 20.000", command=lambda:addbalance(duapuluh_ribu))
+input_duapuluh.grid(row=16, column=14, columnspan=2, rowspan=2, sticky='nesw', pady=5)
 
 #change label
 change = ttk.Label(window, text="Kembalian", background='dark grey')
@@ -372,12 +375,13 @@ output.config(anchor='center')
 """
 #frame styling
 style = ttk.Style()
-style.configure("TFrame", background=background_color)
+style.configure("TButton", font=("Helvetica", 10))
+style.configure("TLabel", font=("Helvetica", 10))
 
 #screen5
 screen5 = Screen(window)
-thank_you = ttk.Label(screen5, text="Thank You!", font='20', background='#ffffff')
-thank_you.grid(row=4, column=1, rowspan=4, columnspan=8, sticky='nesw')
+thank_you = ttk.Label(screen5, text="Thank You!", font=("Helvetica", 25, "bold"), background=background_color)
+thank_you.grid(row=6, column=2, rowspan=4, columnspan=8, sticky='nesw')
 
 #screen4
 """
@@ -391,7 +395,7 @@ bbq = ttk.Button(screen4, text="BBQ",command=lambda: screen4_func(1))
 mayo = ttk.Button(screen4, text="Mayonnaise",command=lambda: screen4_func(2))
 tomat = ttk.Button(screen4, text="Cabai",command=lambda: screen4_func(3))
 cabai = ttk.Button(screen4, text="Tomat",command=lambda: screen4_func(4))
-menu4 = ttk.Label(screen4, text="Pick Sauce")
+menu4 = ttk.Label(screen4, text="Pick Sauce", font=("Helvetica", 12, "bold"), background=background_color)
 menu4.pack(side='top')
 
 #images
@@ -417,7 +421,7 @@ cabai.grid(row=15, column=9, columnspan=2, rowspan=1, sticky='nesw')
     3 = tuna
 """
 screen3 = Screen(window)
-menu3 = ttk.Label(screen3, text="Pick Meat")
+menu3 = ttk.Label(screen3, text="Pick Meat", font=("Helvetica", 12, "bold"), background=background_color)
 ayam = ttk.Button(screen3, text="Ayam",command=lambda: screen3_func(1))
 sapi = ttk.Button(screen3, text="Sapi",command=lambda: screen3_func(2))
 tuna = ttk.Button(screen3, text="Tuna",command=lambda: screen3_func(3))
@@ -448,7 +452,7 @@ tomato = ttk.Button(screen2, text="Tomat", command=lambda: screen2_func(1))
 selada = ttk.Button(screen2, text="Selada", command=lambda: screen2_func(2))
 paprika= ttk.Button(screen2, text="Paprika", command=lambda: screen2_func(3))
 bawang = ttk.Button(screen2, text="Bawang", command=lambda: screen2_func(4))
-menu2 = ttk.Label(screen2, text="Pick Vegetable")
+menu2 = ttk.Label(screen2, text="Pick Vegetable", font=("Helvetica", 12, "bold"), background=background_color)
 
 menu2.pack(side='top')
 
@@ -488,7 +492,7 @@ big_bread = ImageTk.PhotoImage(big_bread)
 small_bread_label = ttk.Label(screen1, image=small_bread, background=background_color)
 big_bread_label = ttk.Label(screen1, image=big_bread, background=background_color)
 
-menu1 = ttk.Label(screen1, text="Pick Sandwich Size")
+menu1 = ttk.Label(screen1, text="Pick Sandwich Size", font=("Helvetica", 12, "bold"), background=background_color)
 small = ttk.Button(screen1, text="Small: Rp. 20.000", state='disabled', command=lambda:screen1_func(small_size))
 large = ttk.Button(screen1, text="Large: Rp. 30.000", state='disabled', command=lambda:screen1_func(large_size))
 
@@ -497,17 +501,6 @@ small.grid(row=8, column=3, rowspan=2, columnspan=4)
 large.grid(row=14, column=3, rowspan=2, columnspan=4)
 small_bread_label.grid(row = 6, column=4, rowspan=2, columnspan=2)
 big_bread_label.grid(row = 11, column=4, rowspan=2, columnspan=2)
-
-
-# label1.grid(row=1, column=1, sticky='nesw')
-# label2.grid(row=9, column=17, sticky='nesw')
-# label3.grid(row=0, column=9, sticky='nesw')
-# label4.grid(row=17, column=0, sticky='nesw')
-# screen = Screen(window)
-# label = ttk.Label(screen, text="label", background='grey')
-# label.pack(expand=True, fill='both')
-# label = ttk.Label(window, text='label1', background='blue')
-# label.grid(row=20, column=12, rowspan=2, columnspan=4, sticky='nesw')
 
 #run
 window.mainloop()
