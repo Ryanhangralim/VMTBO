@@ -15,22 +15,45 @@ class Screen(ttk.Frame):
             self.destroy()
             self.hidden = 1
 
-def add10():
+#add balance function
+def addbalance(amount):
+    #initialize variable
     global balance
     a = balance.get()
-    b = sepuluh_ribu.get()
+    b = amount.get()
     balance.set(a+b)
-    print(f"a:{a}, b:{b}, balance:{balance.get()}")
+    current = balance.get()
+
+    #checking for max balance
+    if(current == 30000):
+        input_sepuluh['state'] = 'disabled'
+        input_duapuluh['state'] = 'disabled'
+    elif(current == 40000):
+        input_sepuluh['state'] = 'disabled'
+        input_duapuluh['state'] = 'disabled'
+    
+    #enable cancel button when balance is added
+    cancel['state'] = 'enabled'
+
+    #update label
     balance_label.config(text=f"Balance: {balance.get()}")
 
 
-def add20():
+#cancel function
+def cancel_func():
     global balance
-    a = balance.get()
-    b = duapuluh_ribu.get()
-    balance.set(a+b)
-    print(f"a:{a}, b:{b}, balance:{balance.get()}")
+
+    #sets balance to 0
+    balance.set(0)
+
+    #disable button state and enable input button
+    cancel['state'] = 'disabled'
+    input_sepuluh['state'] = 'enabled'
+    input_duapuluh['state'] = 'enabled'
+
+    #update label
     balance_label.config(text=f"Balance: {balance.get()}")
+
     
 #setup
 window = tk.Tk()
@@ -56,15 +79,17 @@ balance_label = ttk.Label(window, text=f'Balance = {balance.get()}')
 balance_label.grid(row=2, column=13, rowspan=2, columnspan=3, sticky='nesw')
 
 #cancel button
-cancel = ttk.Button(window, text="Cancel", command=add10)
+cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func)
 cancel.grid(row=5, column=13, rowspan=2, columnspan=3, sticky='nesw')
 
 #add balance buttons
 #add 10k
-input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=add10)
+input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=lambda:addbalance(sepuluh_ribu))
+input_sepuluh.grid(row=11, column=14, columnspan=2, sticky='nesw')
 
 #add 20k
-input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=add10)
+input_duapuluh = ttk.Button(window, text="Input 20 Ribu", command=lambda:addbalance(duapuluh_ribu))
+input_duapuluh.grid(row=16, column=14, columnspan=2, sticky='nesw')
 
 label = ttk.Label(screen, text="label", background='grey')
 label.pack(expand=True, fill='both')
