@@ -191,11 +191,15 @@ def pesanan():
 
     #print list
     ttk.Label(top, text=f"User Input : {user_input}").pack()
-    ttk.Label(top, text=f"User Output : {user_output}").pack()
+    ttk.Label(top, text=f"Vending Machine Output : {user_output}").pack()
     ttk.Label(top, text=f"State List : {state_list}").pack()
 
     #hapus kembalian
     change['text'] = "Kembalian"
+
+    #reset vending machine button
+    reset_button2 = ttk.Button(top, text="Reset Vending Machine", command=reset)
+    reset_button2.pack(side='bottom', pady=25)
 
 def screen1_func(size):
     global balance
@@ -383,13 +387,24 @@ thank_you.grid(row=4, column=1, rowspan=4, columnspan=8, sticky='nesw')
     4 = Tomat
 """
 screen4 = Screen(window)
-bbq = ttk.Button(screen4, text="Select",command=lambda: screen4_func(1))
-mayo = ttk.Button(screen4, text="Select",command=lambda: screen4_func(2))
-tomat = ttk.Button(screen4, text="Select",command=lambda: screen4_func(3))
-cabai = ttk.Button(screen4, text="Select",command=lambda: screen4_func(4))
+bbq = ttk.Button(screen4, text="BBQ",command=lambda: screen4_func(1))
+mayo = ttk.Button(screen4, text="Mayonnaise",command=lambda: screen4_func(2))
+tomat = ttk.Button(screen4, text="Cabai",command=lambda: screen4_func(3))
+cabai = ttk.Button(screen4, text="Tomat",command=lambda: screen4_func(4))
 menu4 = ttk.Label(screen4, text="Pick Sauce")
-
 menu4.pack(side='top')
+
+#images
+bbq_img = ImageTk.PhotoImage(Image.open("images/bbq.png").resize((82, 82)))
+mayo_img = ImageTk.PhotoImage(Image.open("images/mayonnaise.png").resize((82, 82)))
+chili_img = ImageTk.PhotoImage(Image.open("images/chili.png").resize((82, 82)))
+ketchup_img = ImageTk.PhotoImage(Image.open("images/ketchup.png").resize((82, 75)))
+
+ttk.Label(screen4, image=bbq_img, background=background_color).grid(row=2, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen4, image=mayo_img, background=background_color).grid(row=6, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen4, image=chili_img, background=background_color).grid(row=10, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen4, image=ketchup_img, background=background_color).grid(row=14, column=2, columnspan=2, rowspan=3)
+
 bbq.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
 mayo.grid(row=7, column=9, columnspan=2, rowspan=1, sticky='nesw')
 tomat.grid(row=11, column=9, columnspan=2, rowspan=1, sticky='nesw')
@@ -403,14 +418,23 @@ cabai.grid(row=15, column=9, columnspan=2, rowspan=1, sticky='nesw')
 """
 screen3 = Screen(window)
 menu3 = ttk.Label(screen3, text="Pick Meat")
-ayam = ttk.Button(screen3, text="Select",command=lambda: screen3_func(1))
-sapi = ttk.Button(screen3, text="Select",command=lambda: screen3_func(2))
-tuna = ttk.Button(screen3, text="Select",command=lambda: screen3_func(3))
+ayam = ttk.Button(screen3, text="Ayam",command=lambda: screen3_func(1))
+sapi = ttk.Button(screen3, text="Sapi",command=lambda: screen3_func(2))
+tuna = ttk.Button(screen3, text="Tuna",command=lambda: screen3_func(3))
+
+#images
+chicken_img = ImageTk.PhotoImage(Image.open("images/chicken.png").resize((100, 100)))
+beef_img = ImageTk.PhotoImage(Image.open("images/beef.png").resize((100, 100)))
+tuna_img = ImageTk.PhotoImage(Image.open("images/tuna.png").resize((100, 100)))
+
+ttk.Label(screen3, image=chicken_img, background=background_color).grid(row=3, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen3, image=beef_img, background=background_color).grid(row=8, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen3, image=tuna_img, background=background_color).grid(row=13, column=2, columnspan=2, rowspan=3)
 
 menu3.pack(side='top')
-ayam.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
-sapi.grid(row=8, column=9, columnspan=2, rowspan=1, sticky='nesw')
-tuna.grid(row=13, column=9, columnspan=2, rowspan=1, sticky='nesw')
+ayam.grid(row=4, column=9, columnspan=2, rowspan=1, sticky='nesw')
+sapi.grid(row=9, column=9, columnspan=2, rowspan=1, sticky='nesw')
+tuna.grid(row=14, column=9, columnspan=2, rowspan=1, sticky='nesw')
 
 #screen2
 """
@@ -427,6 +451,7 @@ bawang = ttk.Button(screen2, text="Bawang", command=lambda: screen2_func(4))
 menu2 = ttk.Label(screen2, text="Pick Vegetable")
 
 menu2.pack(side='top')
+
 #images
 tomato_img = ImageTk.PhotoImage(Image.open("images/tomato.png").resize((82, 82)))
 lettuce_img = ImageTk.PhotoImage(Image.open("images/lettuce.png").resize((82, 82)))
