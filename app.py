@@ -121,13 +121,75 @@ def screen1_func(size):
     global balance
     current = balance.get()
 
-    #sets the price
+    #sets the price & userinput & state list
     if(size.get() == "small"):
         price = 20000
+        user_input.append('a')
+        state_list.append('A')
     elif(size.get() == "large"):
         price = 30000
-    
+        user_input.append('b')
+        state_list.append('B')
+
+
     #check for changes
+    user_change = current-price
+
+    #output 
+    if (user_change == 10000):
+        user_output.append('r')
+        change["text"] = "10000"
+    elif(user_change == 20000):
+        user_output.append('s')
+        change["text"] = "20000"
+    user_change = 0
+    balance.set(user_change)
+
+    #update balance label
+    balance_label.config(text=f"Balance: {balance.get()}")
+
+    #disable cancel button and input button once selected size
+    cancel['state'] = 'disabled'
+    input_sepuluh['state'] = 'disabled'
+    input_duapuluh['state'] = 'disabled'
+
+    #hide screen
+    screen1.hide()
+
+
+def screen2_func(veggie):
+    #add user input and state
+    if(veggie == 1):
+        user_input.append('c')
+        state_list.append('C')
+    elif(veggie == 2):
+        user_input.append('d')
+        state_list.append('D')
+    elif(veggie == 3):
+        user_input.append('e')
+        state_list.append('E')
+    elif(veggie == 4):
+        user_input.append('f')
+        state_list.append('F')
+    
+    #hide screen
+    screen2.hide()
+
+
+def screen3_func(meat):
+    #add user input and state travelled
+    if(meat == 1):
+        user_input.append('g')
+        state_list.append('G')
+    elif(meat == 2):
+        user_input.append('h')
+        state_list.append('H')
+    elif(meat == 3):
+        user_input.append('i')
+        state_list.append('I')
+
+    #hide screen
+    screen3.hide()
 
 
 #window setup
@@ -149,7 +211,6 @@ window.grid_propagate(False)
 #reset button
 reset_button = ttk.Button(window, text="Reset", command=reset)
 reset_button.grid(row = 2, column=13, rowspan=2, columnspan=2, sticky='nesw')
-
 
 #balance label
 balance = tk.IntVar(value = 0)
@@ -197,7 +258,6 @@ screen5 = Screen(window)
 thank_you = ttk.Label(screen5, text="Thank You!", font='20', background='#ffffff')
 thank_you.grid(row=4, column=1, rowspan=4, columnspan=8, sticky='nesw')
 
-
 #screen4
 screen4 = Screen(window)
 bbq = ttk.Button(screen4, text="Select")
@@ -213,11 +273,16 @@ tomat.grid(row=11, column=9, columnspan=2, rowspan=1, sticky='nesw')
 cabai.grid(row=15, column=9, columnspan=2, rowspan=1, sticky='nesw')
 
 #screen3
+"""
+    1 = ayam
+    2 = sapi
+    3 = tuna
+"""
 screen3 = Screen(window)
 menu3 = ttk.Label(screen3, text="Pick Meat")
-ayam = ttk.Button(screen3, text="Select")
-sapi = ttk.Button(screen3, text="Select")
-tuna = ttk.Button(screen3, text="Select")
+ayam = ttk.Button(screen3, text="Select",command=lambda: screen3_func(1))
+sapi = ttk.Button(screen3, text="Select",command=lambda: screen3_func(2))
+tuna = ttk.Button(screen3, text="Select",command=lambda: screen3_func(3))
 
 menu3.pack(side='top')
 ayam.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
@@ -225,11 +290,17 @@ sapi.grid(row=8, column=9, columnspan=2, rowspan=1, sticky='nesw')
 tuna.grid(row=13, column=9, columnspan=2, rowspan=1, sticky='nesw')
 
 #screen2
+"""
+    1 = tomat
+    2 = selada
+    3 = paprika
+    4 = bawang
+"""
 screen2 = Screen(window)
-tomato = ttk.Button(screen2, text="Select")
-selada = ttk.Button(screen2, text="Select")
-paprika= ttk.Button(screen2, text="Select")
-bawang = ttk.Button(screen2, text="Select")
+tomato = ttk.Button(screen2, text="Select", command=lambda: screen2_func(1))
+selada = ttk.Button(screen2, text="Select", command=lambda: screen2_func(2))
+paprika= ttk.Button(screen2, text="Select", command=lambda: screen2_func(3))
+bawang = ttk.Button(screen2, text="Select", command=lambda: screen2_func(4))
 menu2 = ttk.Label(screen2, text="Pick Vegetable")
 
 menu2.pack(side='top')
