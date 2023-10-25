@@ -192,6 +192,24 @@ def screen3_func(meat):
     screen3.hide()
 
 
+def screen4_func(sauce):
+    #add user input and state
+    if(sauce == 1):
+        user_input.append('j')
+        state_list.append('J')
+    elif(sauce== 2):
+        user_input.append('k')
+        state_list.append('K')
+    elif(sauce== 3):
+        user_input.append('l')
+        state_list.append('L')
+    elif(sauce == 4):
+        user_input.append('m')
+        state_list.append('M')
+    
+    #hide screen
+    screen4.hide()
+
 #window setup
 window = tk.Tk()
 window.geometry(f'500x675+{round((window.winfo_screenwidth() - 500)/2)}+{round((window.winfo_screenheight() - 730)/2)}')
@@ -259,11 +277,17 @@ thank_you = ttk.Label(screen5, text="Thank You!", font='20', background='#ffffff
 thank_you.grid(row=4, column=1, rowspan=4, columnspan=8, sticky='nesw')
 
 #screen4
+"""
+    1 = BBQ
+    2 = Mayonnaise
+    3 = Cabai
+    4 = Tomat
+"""
 screen4 = Screen(window)
-bbq = ttk.Button(screen4, text="Select")
-mayo = ttk.Button(screen4, text="Select")
-tomat = ttk.Button(screen4, text="Select")
-cabai = ttk.Button(screen4, text="Select")
+bbq = ttk.Button(screen4, text="Select",command=lambda: screen4_func(1))
+mayo = ttk.Button(screen4, text="Select",command=lambda: screen4_func(2))
+tomat = ttk.Button(screen4, text="Select",command=lambda: screen4_func(3))
+cabai = ttk.Button(screen4, text="Select",command=lambda: screen4_func(4))
 menu4 = ttk.Label(screen4, text="Pick Sauce")
 
 menu4.pack(side='top')
