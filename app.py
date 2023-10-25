@@ -10,6 +10,8 @@ state_list = list()
 user_output = list()
 state_list.append('R')
 
+background_color = "#858585"
+
 table = {
     "a" : "Roti Kecil,", #input sandwich
     "b" : "Roti Besar,",
@@ -366,7 +368,7 @@ output.config(anchor='center')
 """
 #frame styling
 style = ttk.Style()
-style.configure("TFrame", background="#858585")
+style.configure("TFrame", background=background_color)
 
 #screen5
 screen5 = Screen(window)
@@ -418,13 +420,24 @@ tuna.grid(row=13, column=9, columnspan=2, rowspan=1, sticky='nesw')
     4 = bawang
 """
 screen2 = Screen(window)
-tomato = ttk.Button(screen2, text="Select", command=lambda: screen2_func(1))
-selada = ttk.Button(screen2, text="Select", command=lambda: screen2_func(2))
-paprika= ttk.Button(screen2, text="Select", command=lambda: screen2_func(3))
-bawang = ttk.Button(screen2, text="Select", command=lambda: screen2_func(4))
+tomato = ttk.Button(screen2, text="Tomat", command=lambda: screen2_func(1))
+selada = ttk.Button(screen2, text="Selada", command=lambda: screen2_func(2))
+paprika= ttk.Button(screen2, text="Paprika", command=lambda: screen2_func(3))
+bawang = ttk.Button(screen2, text="Bawang", command=lambda: screen2_func(4))
 menu2 = ttk.Label(screen2, text="Pick Vegetable")
 
 menu2.pack(side='top')
+#images
+tomato_img = ImageTk.PhotoImage(Image.open("images/tomato.png").resize((82, 82)))
+lettuce_img = ImageTk.PhotoImage(Image.open("images/lettuce.png").resize((82, 82)))
+paprika_img = ImageTk.PhotoImage(Image.open("images/paprika.png").resize((82, 82)))
+onion_img = ImageTk.PhotoImage(Image.open("images/onion.png").resize((82, 75)))
+
+ttk.Label(screen2, image=tomato_img, background=background_color).grid(row=2, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=lettuce_img, background=background_color).grid(row=6, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=paprika_img, background=background_color).grid(row=10, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=onion_img, background=background_color).grid(row=14, column=2, columnspan=2, rowspan=3)
+
 tomato.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
 selada.grid(row=7, column=9, columnspan=2, rowspan=1, sticky='nesw')
 paprika.grid(row=11, column=9, columnspan=2, rowspan=1, sticky='nesw')
@@ -447,8 +460,8 @@ small_bread = ImageTk.PhotoImage(small_bread)
 big_bread = Image.open("images/Bread.png").resize((190,190))
 big_bread = ImageTk.PhotoImage(big_bread)
 
-small_bread_label = ttk.Label(screen1, image=small_bread, background='#858585')
-big_bread_label = ttk.Label(screen1, image=big_bread, background='#858585')
+small_bread_label = ttk.Label(screen1, image=small_bread, background=background_color)
+big_bread_label = ttk.Label(screen1, image=big_bread, background=background_color)
 
 menu1 = ttk.Label(screen1, text="Pick Sandwich Size")
 small = ttk.Button(screen1, text="Small: Rp. 20.000", state='disabled', command=lambda:screen1_func(small_size))
