@@ -84,7 +84,6 @@ balance_label.grid(row=2, column=13, rowspan=2, columnspan=3, sticky='nesw')
 cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func)
 cancel.grid(row=5, column=13, rowspan=2, columnspan=3, sticky='nesw')
 
-
 #add balance buttons
 #add 10k
 input_sepuluh = ttk.Button(window, text="Input 10 Ribu", command=lambda:addbalance(sepuluh_ribu))
@@ -94,7 +93,9 @@ input_sepuluh.grid(row=11, column=14, columnspan=2, sticky='nesw')
 input_duapuluh = ttk.Button(window, text="Input 20 Ribu", command=lambda:addbalance(duapuluh_ribu))
 input_duapuluh.grid(row=16, column=14, columnspan=2, sticky='nesw')
 
-
+#change button
+change = ttk.Label(window, text="Kembalian", background='dark grey', justify='center')
+change.grid(row=19, column=13, columnspan=4, rowspan=2, sticky='nesw')
 
 #vending machine screen setup
 """
