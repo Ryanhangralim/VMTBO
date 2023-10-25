@@ -1,7 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+import os
+import sys
 
+user_input = list()
+state_list = list()
+user_output = list()
+state_list.append('R')
+
+def reset():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 class Screen(ttk.Frame):
     def __init__(self, parent):
@@ -28,6 +38,23 @@ def addbalance(amount):
     balance.set(a+b)
     current = balance.get()
 
+    #add input to user_input
+    if(b == 10000):
+        user_input.append('n')
+    elif(b == 20000):
+        user_input.append('o')
+
+    #add state to travelled state
+    current = balance.get()
+    if(current == 10000):
+        state_list.append('N')
+    elif(current == 20000):
+        state_list.append('O')
+    elif(current == 30000):
+        state_list.append('P')
+    elif(current == 40000):
+        state_list.append('Q')
+    
     #checking for max balance
     if(current == 30000):
         input_sepuluh['state'] = 'disabled'
@@ -36,6 +63,13 @@ def addbalance(amount):
         input_sepuluh['state'] = 'disabled'
         input_duapuluh['state'] = 'disabled'
     
+    #enabling menu1 buttons when above a certain balance
+    if(current >= 20000):
+        small['state'] = 'enabled'
+    if(current >= 30000):
+        small['state'] = 'enabled'
+        large['state'] = 'enabled'
+
     #enable cancel button when balance is added
     cancel['state'] = 'enabled'
 
@@ -47,18 +81,55 @@ def addbalance(amount):
 def cancel_func():
     global balance
 
+    #add input to user_input
+    user_input.append('p')
+
+    #add travelled state to state_list
+    state_list.append('R')
+
+    #add output to user_output
+    current = balance.get()
+    if(current == 10000):
+        user_output.append('r')
+        change["text"] = "10000"
+    elif(current == 20000):
+        user_output.append('s')
+        change["text"] = "20000"
+    elif(current == 30000):
+        user_output.append('t')
+        change["text"] = "30000"
+    elif(current == 40000):
+        user_output.append('u')
+        change["text"] = "40000"
+
     #sets balance to 0
     balance.set(0)
 
-    #disable button state and enable input button
+    #disable button state and enable input button, disable small and large button
     cancel['state'] = 'disabled'
     input_sepuluh['state'] = 'enabled'
     input_duapuluh['state'] = 'enabled'
+    small['state'] = 'disabled'
+    large['state'] = 'disabled'
+
 
     #update label
     balance_label.config(text=f"Balance: {balance.get()}")
 
+
+def screen1_func(size):
+    global balance
+    current = balance.get()
+
+    #sets the price
+    if(size.get() == "small"):
+        price = 20000
+    elif(size.get() == "large"):
+        price = 30000
     
+    #check for changes
+
+
 #window setup
 window = tk.Tk()
 window.geometry(f'500x675+{round((window.winfo_screenwidth() - 500)/2)}+{round((window.winfo_screenheight() - 730)/2)}')
@@ -75,15 +146,20 @@ window.columnconfigure(tuple(range(17)), weight=1, uniform='fred')
 window.rowconfigure(tuple(range(23)), weight= 1, uniform='fred')
 window.grid_propagate(False)
 
+#reset button
+reset_button = ttk.Button(window, text="Reset", command=reset)
+reset_button.grid(row = 2, column=13, rowspan=2, columnspan=2, sticky='nesw')
+
+
 #balance label
 balance = tk.IntVar(value = 0)
 balance_label = ttk.Label(window, text=f'Balance = {balance.get()}')
-balance_label.grid(row=2, column=13, rowspan=2, columnspan=3, sticky='nesw')
+balance_label.grid(row=4, column=13, rowspan=2, columnspan=3, sticky='nesw')
 balance_label.config(anchor='center')
 
 #cancel button
 cancel = ttk.Button(window, text="Cancel", state='disabled', command=cancel_func)
-cancel.grid(row=5, column=13, rowspan=2, columnspan=3, sticky='nesw')
+cancel.grid(row=6, column=13, rowspan=2, columnspan=3, sticky='nesw')
 
 #add balance buttons
 #add 10k
@@ -120,7 +196,6 @@ style.configure("TFrame", background="#858585")
 screen5 = Screen(window)
 thank_you = ttk.Label(screen5, text="Thank You!", font='20', background='#ffffff')
 thank_you.grid(row=4, column=1, rowspan=4, columnspan=8, sticky='nesw')
-
 
 
 #screen4
@@ -169,10 +244,12 @@ label3 = ttk.Label(screen5, text='label3')
 label4 = ttk.Label(screen5, text='label4')
 
 #screen1
+small_size = tk.StringVar(value="small")
+large_size = tk.StringVar(value="large")
 screen1 = Screen(window)
 menu1 = ttk.Label(screen1, text="Pick Sandwich Size")
-small = ttk.Button(screen1, text="Select")
-large = ttk.Button(screen1, text="Select")
+small = ttk.Button(screen1, text="Select", state='disabled', command=lambda:screen1_func(small_size))
+large = ttk.Button(screen1, text="Select", state='disabled', command=lambda:screen1_func(large_size))
 
 menu1.pack(side='top')
 small.grid(row=6, column=3, rowspan=2, columnspan=4)
@@ -188,6 +265,9 @@ large.grid(row=14, column=3, rowspan=2, columnspan=4)
 # label = ttk.Label(window, text='label1', background='blue')
 # label.grid(row=20, column=12, rowspan=2, columnspan=4, sticky='nesw')
 
-
 #run
 window.mainloop()
+
+print(f" User Input: {user_input}")
+print(f" User Output: {user_output}")
+print(f" State List: {state_list}")
