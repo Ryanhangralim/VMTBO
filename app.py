@@ -13,26 +13,6 @@ state_list.append('R')
 
 background_color = "#ecf0f1"
 
-table = {
-    "a" : "Roti Kecil,", #input sandwich
-    "b" : "Roti Besar,",
-    "c" : "Tomat,",
-    "d" : "Selada,",
-    "e" : "Paprika,",
-    "f" : "Bawang,",
-    "g" : "Daging Ayam,",
-    "h" : "Daging Sapi,",
-    "i" : "Daging Tuna,",
-    "j" : "Saus BBQ.",
-    "k" : "Saus Mayonnaise.",
-    "l" : "Saus Tomat.",
-    "m" : "Saus Cabai.",
-    "r" : "Kembalian = Rp. 10000",       #output kembalian
-    "s" : "Kembalian = Rp. 20000",
-    "t" : "Kembalian = Rp. 30000",
-    "u" : "Kembalian = Rp. 40000"
-}
-
 roti = {
     "a" : "Roti Kecil.", #input sandwich
     "b" : "Roti Besar."    
