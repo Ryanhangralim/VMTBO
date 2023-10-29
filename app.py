@@ -33,13 +33,47 @@ table = {
     "u" : "Kembalian = Rp. 40000"
 }
 
+roti = {
+    "a" : "Roti Kecil.", #input sandwich
+    "b" : "Roti Besar."    
+}
+
+sayur = {
+    "c" : "Tomat,",
+    "d" : "Selada,",
+    "e" : "Paprika,",
+    "f" : "Bawang,"
+}
+
+daging = {
+    "g" : "Daging Ayam.",
+    "h" : "Daging Sapi.",
+    "i" : "Daging Tuna."
+}
+
+saus = {
+    "j" : "Saus BBQ.",
+    "k" : "Saus Mayonnaise.",
+    "l" : "Saus Tomat.",
+    "m" : "Saus Cabai.",
+}
 
 def convert(list):
-    final = " "
+    roti_output = "Roti : "
+    sayur_output = "Sayur : "
+    daging_output = "Daging : "
+    saus_output = "Saus : " 
     for i in list:
-        if i in table:
-            final += table[i] + " "
-    return final
+        if i in roti:
+            roti_output += roti[i]
+        elif i in sayur:
+            sayur_output += sayur[i] + " "
+        elif i in daging:
+            daging_output += daging[i]
+        elif i in saus:
+            saus_output += saus[i]
+    sayur_output = sayur_output[:-2] + "."
+    return f"{roti_output}\n{sayur_output}\n{daging_output}\n{saus_output}" 
 
 def reset():
     python = sys.executable
@@ -158,7 +192,7 @@ def pesanan():
     #Pop up screen
     tombol_ambil['state'] = 'disabled'
     top= Toplevel(window)
-    top.geometry(f"500x550+{round((window.winfo_screenwidth() - 400)/2)}+{round((window.winfo_screenheight() - 630)/2)}")
+    top.geometry(f"500x600+{round((window.winfo_screenwidth() - 400)/2)}+{round((window.winfo_screenheight() - 630)/2)}")
     top.resizable(False,False)
     top.title("Pesanan")
     top.iconbitmap("images/vmicon.ico")
@@ -177,7 +211,7 @@ def pesanan():
     label_gambar.pack()
 
     #label detail pesanan
-    detail_pesanan = ttk.Label(top, text=f"Sandwich :{convert(user_input)}")
+    detail_pesanan = ttk.Label(top, text=f"Sandwich :\n{convert(user_input)}")
     detail_pesanan.pack()
 
     #kembalian
@@ -246,22 +280,27 @@ def screen1_func(size):
 
 def screen2_func(veggie):
     #add user input and state
+    next['state'] = 'enabled'
     if(veggie == 1):
         user_input.append('c')
         state_list.append('C')
+        tomato['state'] = 'disabled'
     elif(veggie == 2):
         user_input.append('d')
         state_list.append('D')
+        selada['state'] = 'disabled'
     elif(veggie == 3):
         user_input.append('e')
         state_list.append('E')
+        paprika['state'] = 'disabled'
     elif(veggie == 4):
         user_input.append('f')
         state_list.append('F')
+        bawang['state'] = 'disabled'
     
+def next_func():
     #hide screen
     screen2.hide()
-
 
 def screen3_func(meat):
     #add user input and state travelled
@@ -387,14 +426,14 @@ thank_you.grid(row=6, column=2, rowspan=4, columnspan=8, sticky='nesw')
 """
     1 = BBQ
     2 = Mayonnaise
-    3 = Cabai
-    4 = Tomat
+    3 = Tomat
+    4 = Cabai
 """
 screen4 = Screen(window)
 bbq = ttk.Button(screen4, text="BBQ",command=lambda: screen4_func(1))
 mayo = ttk.Button(screen4, text="Mayonnaise",command=lambda: screen4_func(2))
-tomat = ttk.Button(screen4, text="Cabai",command=lambda: screen4_func(3))
-cabai = ttk.Button(screen4, text="Tomat",command=lambda: screen4_func(4))
+tomat = ttk.Button(screen4, text="Tomat",command=lambda: screen4_func(3))
+cabai = ttk.Button(screen4, text="Cabai",command=lambda: screen4_func(4))
 menu4 = ttk.Label(screen4, text="Pick Sauce", font=("Helvetica", 12, "bold"), background=background_color)
 menu4.pack(side='top')
 
@@ -402,12 +441,12 @@ menu4.pack(side='top')
 bbq_img = ImageTk.PhotoImage(Image.open("images/bbq.png").resize((82, 82)))
 mayo_img = ImageTk.PhotoImage(Image.open("images/mayonnaise.png").resize((82, 82)))
 chili_img = ImageTk.PhotoImage(Image.open("images/chili.png").resize((82, 82)))
-ketchup_img = ImageTk.PhotoImage(Image.open("images/ketchup.png").resize((82, 75)))
+ketchup_img = ImageTk.PhotoImage(Image.open("images/ketchup.png").resize((82, 82)))
 
 ttk.Label(screen4, image=bbq_img, background=background_color).grid(row=2, column=2, columnspan=2, rowspan=3)
 ttk.Label(screen4, image=mayo_img, background=background_color).grid(row=6, column=2, columnspan=2, rowspan=3)
-ttk.Label(screen4, image=chili_img, background=background_color).grid(row=10, column=2, columnspan=2, rowspan=3)
-ttk.Label(screen4, image=ketchup_img, background=background_color).grid(row=14, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen4, image=ketchup_img, background=background_color).grid(row=10, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen4, image=chili_img, background=background_color).grid(row=14, column=2, columnspan=2, rowspan=3)
 
 bbq.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
 mayo.grid(row=7, column=9, columnspan=2, rowspan=1, sticky='nesw')
@@ -452,25 +491,27 @@ tomato = ttk.Button(screen2, text="Tomat", command=lambda: screen2_func(1))
 selada = ttk.Button(screen2, text="Selada", command=lambda: screen2_func(2))
 paprika= ttk.Button(screen2, text="Paprika", command=lambda: screen2_func(3))
 bawang = ttk.Button(screen2, text="Bawang", command=lambda: screen2_func(4))
+next = ttk.Button(screen2, text="Next", width=15, state='disabled', command=next_func)
 menu2 = ttk.Label(screen2, text="Pick Vegetable", font=("Helvetica", 12, "bold"), background=background_color)
 
 menu2.pack(side='top')
 
 #images
-tomato_img = ImageTk.PhotoImage(Image.open("images/tomato.png").resize((82, 82)))
-lettuce_img = ImageTk.PhotoImage(Image.open("images/lettuce.png").resize((82, 82)))
-paprika_img = ImageTk.PhotoImage(Image.open("images/paprika.png").resize((82, 82)))
-onion_img = ImageTk.PhotoImage(Image.open("images/onion.png").resize((82, 75)))
+tomato_img = ImageTk.PhotoImage(Image.open("images/tomato.png").resize((75, 75)))
+lettuce_img = ImageTk.PhotoImage(Image.open("images/lettuce.png").resize((75, 75)))
+paprika_img = ImageTk.PhotoImage(Image.open("images/paprika.png").resize((75, 75)))
+onion_img = ImageTk.PhotoImage(Image.open("images/onion.png").resize((75, 75)))
 
 ttk.Label(screen2, image=tomato_img, background=background_color).grid(row=2, column=2, columnspan=2, rowspan=3)
-ttk.Label(screen2, image=lettuce_img, background=background_color).grid(row=6, column=2, columnspan=2, rowspan=3)
-ttk.Label(screen2, image=paprika_img, background=background_color).grid(row=10, column=2, columnspan=2, rowspan=3)
-ttk.Label(screen2, image=onion_img, background=background_color).grid(row=14, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=lettuce_img, background=background_color).grid(row=5, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=paprika_img, background=background_color).grid(row=8, column=2, columnspan=2, rowspan=3)
+ttk.Label(screen2, image=onion_img, background=background_color).grid(row=11, column=2, columnspan=2, rowspan=3)
 
 tomato.grid(row=3, column=9, columnspan=2, rowspan=1, sticky='nesw')
-selada.grid(row=7, column=9, columnspan=2, rowspan=1, sticky='nesw')
-paprika.grid(row=11, column=9, columnspan=2, rowspan=1, sticky='nesw')
-bawang.grid(row=15, column=9, columnspan=2, rowspan=1, sticky='nesw')
+selada.grid(row=6, column=9, columnspan=2, rowspan=1, sticky='nesw')
+paprika.grid(row=9, column=9, columnspan=2, rowspan=1, sticky='nesw')
+bawang.grid(row=12, column=9, columnspan=2, rowspan=1, sticky='nesw')
+next.pack(side='bottom', ipady=12, pady=5)
 
 label1 = ttk.Label(screen5, text='label1')
 label2 = ttk.Label(screen5, text='label2')
