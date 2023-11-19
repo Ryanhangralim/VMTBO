@@ -5,6 +5,7 @@ import customtkinter as ctk
 from PIL import Image, ImageTk
 import os
 import sys
+from deltatopiVM import delta_topi
 
 user_input = list()
 state_list = list()
@@ -182,7 +183,7 @@ def pesanan():
     label.pack(pady=5)
 
     #import gambar
-    sandwich = Image.open("images/sandwich.png").resize((250,250))
+    sandwich = Image.open("images/sandwich.png").resize((200,200))
     sandwich = ImageTk.PhotoImage(sandwich)
     top.image = sandwich
 
@@ -209,6 +210,7 @@ def pesanan():
     ttk.Label(top, text=f"User Input : {user_input}").pack()
     ttk.Label(top, text=f"Vending Machine Output : {user_output}").pack()
     ttk.Label(top, text=f"State List : {state_list}").pack()
+    ttk.Label(top, text=f"Status : {delta_topi(user_input)}").pack()
 
     #hapus kembalian
     change['text'] = "Kembalian"
@@ -220,7 +222,7 @@ def pesanan():
 
 def screen1_func(size):
     global balance
-    current = balance.get()
+    current = balance.get ()
 
     #sets the price & userinput & state list
     if(size.get() == "small"):
