@@ -10,36 +10,38 @@ from deltatopiVM import delta_topi
 user_input = list()
 state_list = list()
 user_output = list()
-state_list.append('R')
+current_state = 'R'
+state_list.append(current_state)
 
 background_color = "#ecf0f1"
 
-roti = {
-    "a" : "Roti Kecil.", #input sandwich
-    "b" : "Roti Besar."    
-}
-
-sayur = {
-    "c" : "Tomat,",
-    "d" : "Selada,",
-    "e" : "Paprika,",
-    "f" : "Bawang,"
-}
-
-daging = {
-    "g" : "Daging Ayam.",
-    "h" : "Daging Sapi.",
-    "i" : "Daging Tuna."
-}
-
-saus = {
-    "j" : "Saus BBQ.",
-    "k" : "Saus Mayonnaise.",
-    "l" : "Saus Tomat.",
-    "m" : "Saus Cabai.",
-}
 
 def convert(list):
+    roti = {
+        "a" : "Roti Kecil.", #input sandwich
+        "b" : "Roti Besar."    
+    }
+
+    sayur = {
+        "c" : "Tomat,",
+        "d" : "Selada,",
+        "e" : "Paprika,",
+        "f" : "Bawang,"
+    }
+
+    daging = {
+        "g" : "Daging Ayam.",
+        "h" : "Daging Sapi.",
+        "i" : "Daging Tuna."
+    }
+
+    saus = {
+        "j" : "Saus BBQ.",
+        "k" : "Saus Mayonnaise.",
+        "l" : "Saus Tomat.",
+        "m" : "Saus Cabai.",
+    }
+
     roti_output = "Roti : "
     sayur_output = "Sayur : "
     daging_output = "Daging : "
@@ -228,11 +230,12 @@ def screen1_func(size):
     if(size.get() == "small"):
         price = 20000
         user_input.append('a')
-        state_list.append('A')
+        current_state = 'A'
     elif(size.get() == "large"):
         price = 30000
         user_input.append('b')
-        state_list.append('B')
+        current_state = 'B'
+    state_list.append(current_state)
 
 
     #check for changes
@@ -265,20 +268,21 @@ def screen2_func(veggie):
     next['state'] = 'enabled'
     if(veggie == 1):
         user_input.append('c')
-        state_list.append('C')
+        current_state = 'C'
         tomato['state'] = 'disabled'
     elif(veggie == 2):
         user_input.append('d')
-        state_list.append('D')
+        current_state = 'D'
         selada['state'] = 'disabled'
     elif(veggie == 3):
         user_input.append('e')
-        state_list.append('E')
+        current_state = 'E'
         paprika['state'] = 'disabled'
     elif(veggie == 4):
         user_input.append('f')
-        state_list.append('F')
+        current_state = 'F'
         bawang['state'] = 'disabled'
+    state_list.append(current_state)
     
 def next_func():
     #hide screen
@@ -288,14 +292,14 @@ def screen3_func(meat):
     #add user input and state travelled
     if(meat == 1):
         user_input.append('g')
-        state_list.append('G')
+        current_state = 'G'
     elif(meat == 2):
         user_input.append('h')
-        state_list.append('H')
+        current_state = 'H'
     elif(meat == 3):
         user_input.append('i')
-        state_list.append('I')
-
+        current_state = 'I'
+    state_list.append(current_state)
     #hide screen
     screen3.hide()
 
@@ -304,16 +308,17 @@ def screen4_func(sauce):
     #add user input and state
     if(sauce == 1):
         user_input.append('j')
-        state_list.append('J')
+        current_state = 'J'
     elif(sauce== 2):
         user_input.append('k')
-        state_list.append('K')
+        current_state = 'K'
     elif(sauce== 3):
         user_input.append('l')
-        state_list.append('L')
+        current_state = 'L'
     elif(sauce == 4):
         user_input.append('m')
-        state_list.append('M')
+        current_state = 'M'
+    state_list.append(current_state)
     
     #hide screen
     screen4.hide()
@@ -527,7 +532,3 @@ big_bread_label.grid(row = 11, column=4, rowspan=2, columnspan=2)
 
 #run
 window.mainloop()
-
-print(f" User Input: {user_input}")
-print(f" User Output: {user_output}")
-print(f" State List: {state_list}")
