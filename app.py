@@ -83,6 +83,7 @@ def addbalance(amount):
     #initialize variable
     global balance
     a = balance.get()
+    #amount = jumlah uang yang diinput oleh user
     b = amount.get()
     balance.set(a+b)
     current = balance.get()
@@ -96,13 +97,14 @@ def addbalance(amount):
     #add state to travelled state
     current = balance.get()
     if(current == 10000):
-        state_list.append('N')
+        current_state = 'N'
     elif(current == 20000):
-        state_list.append('O')
+        current_state = 'O'
     elif(current == 30000):
-        state_list.append('P')
+        current_state = 'P'
     elif(current == 40000):
-        state_list.append('Q')
+        current_state = 'Q'
+    state_list.append(current_state)
     
     #checking for max balance
     if(current == 30000):
@@ -169,7 +171,8 @@ def cancel_func():
 def pesanan():
     #update user_input & state
     user_input.append('q')
-    state_list.append('R')
+    current_state = 'R'
+    state_list.append(current_state)
     user_output.append('1')
 
     #Pop up screen
@@ -224,7 +227,7 @@ def pesanan():
 
 def screen1_func(size):
     global balance
-    current = balance.get ()
+    current = balance.get()
 
     #sets the price & userinput & state list
     if(size.get() == "small"):
